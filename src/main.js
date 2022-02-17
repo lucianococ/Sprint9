@@ -8,6 +8,7 @@ window.$ = window.JQuery = JQuery;
 import 'popper.js';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'animate.css';
 //import { library } from '@fortawesome/fontawesome-svg-core';
 //import { fas } from '@fortawesome/free-solid-svg-icons';
 //import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';

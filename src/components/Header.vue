@@ -8,7 +8,7 @@
             <div class="logo align-item-center col-4">
                <the-navbar></the-navbar>
             </div>
-            <div class="col-4">
+            <div class="col-4 align-item-center col-4">
                         <login></login>
            
             </div>

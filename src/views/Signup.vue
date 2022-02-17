@@ -8,17 +8,15 @@
             <div class="form-group ">
                 <label for="Username">Username</label>
                 <input type="text" class="form-control" id="username" v-model="login.username" placeholder="Enter username">
-                <span v-if="!login.username" class="text-danger">Debes ingresar el usuario</span>
+                <span class="text-danger">{{erroreslogin.username}}</span>
                
             </div>
             <div class="form-group" >
                 <label for="Password">Password</label>
                 <input type="password" class="form-control" id="Password" v-model="login.password" placeholder="Password">
-                <span v-if="!login.password" class="text-danger">Debes ingresar el password</span>
+                <span class="text-danger">{{erroreslogin.password}}</span>
             </div>
-            <router-link  to="/" class="router-link" >
-            <button type="submit" @click="agregarLogin(login)" class="btn btn-danger">Enter</button>
-            </router-link>
+            <button type="submit" @click="ValidarLogin()" class="btn btn-danger">Enter</button>
         </form>
         
         
@@ -27,43 +25,55 @@
             <div class="form-group ">
                 <label for="Username2">Username</label>
                 <input type="text" class="form-control" id="username2" v-model="input.username" placeholder="Enter usuario">
-                <span v-if="!input.username" class="text-danger" >Debes ingresar el usuario</span>
-                <span v-else-if="input.username.length <4 || input.username.length >12" class="text-danger">El usuario no cumple requisitos</span>
+                <span class="text-danger" >{{errores.nom1}}</span>
+                <span class="text-danger">{{errores.nom2}}</span>
             </div>  
             <div class="form-group">
                 <label for="Email2">Email address</label>
                 <input type="text" class="form-control" id="Email2" v-model="input.email" placeholder="Enter email">
-                
-                <span v-if="!input.email" class="text-danger">Debes ingresar el email</span>
-                <span v-if="input.email === /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/">El email no cumple requisitos</span>
+                <span class="text-danger">{{errores.email1}}</span>
+                <span class="text-danger">{{errores.email2}}</span>
                 
             </div>
             <div class="form-group" >
                 <label for="Password3">Password</label>
-                <input type="password1" class="form-control" id="Password3" v-model="input.password3" placeholder="Password">
-                <span v-if="!input.password3" class="text-danger">Debes ingresar el password</span>
+                <input type="password" class="form-control" id="Password3" v-model="input.password2" placeholder="Password">
+                <span class="text-danger">{{errores.psw1}}</span>
+                <span class="text-danger">{{errores.psw2}}</span>
+
             </div>
             <div class="form-group" >
                 <label for="Password4">Repetir Password</label>
-                <input type="password2" class="form-control" id="Password4" v-model="input.password4" placeholder="Repetir password">
-                <span v-if="!input.password4" class="text-danger">Debes repetir el password</span>
-                <span v-else-if=" input.password4 != input.password3" class="text-danger">Los password no coinciden</span>
+                <input type="password" class="form-control" id="Password4" v-model="input.password3" placeholder="Repetir password">
+                <span class="text-danger">{{errores.psw3}}</span>
             </div>
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" v-model="input.premium" id="exampleCheck1">
                 <label class="form-check-label" for="exampleCheck1">¿Quieres ser premium?</label>
             </div>
+                
             
-            <button type="submit"  class="btn btn-danger" @click="agregarRegistro(input)">Register</button>
+            <button type="submit"  class="btn btn-danger" @click="Validar()">Register</button>
+            
+          <hr>
+            
+            <div  v-if="confirmacion ==1">
+                    <div id="alert" class="alert alert-success animate__animated animate__fadeIn"> Registro completo</div>      
+
+                
+            </div>
+           
+       
+
            
         </form>
-        </div>
+         </div>
         
     </div>
 </template>
 <script>
 
-import { mapActions } from 'vuex';
+import { mapActions} from 'vuex';
 export default {
     name: 'Signup',
     
@@ -72,18 +82,34 @@ export default {
             input:{
                 username: '',
                 email:'',
-                password3: '',
-                password4:'',
+                password2: '',
+                password3:'',
                 premium: false,
             },
               login:{
                 username: '',
                 password: ''
-            }
+            },
+            errores:{
+                nom1: '',
+                nom2: '',
+                email1: '',
+                email2: '',
+                psw1: '',
+                psw2: '',
+                psw3:''            
+                },
+            erroreslogin:{
+                username:'',
+                password:''
+
+            },
+            confirmacion: 0
+           
         }
     },
     computed:{
-       
+       /*
             registro: {
                 get(){
                     return this.$store.state.registros
@@ -94,26 +120,104 @@ export default {
             },
             log: {
                 get(){
-                    return this.$store.state.login
+                    return this.$store.state.Login
                 },
                 set(val){
                     this.$store.commit('SET_LOGIN', val);
                  }
               
-        },
+        },*/
     },
     methods:{
         ...mapActions(['agregarRegistro', 'agregarLogin']),
-        
+        Validar(){
+            this.errores = [];
+            this.confirmacion = 1;
+            if(!this.input.username){
+                this.errores.nom1 = "Es nombre es requerido";
+                this.confirmacion ++
+            }
+            else if(this.input.username.length < 6 || this.input.username >13) {
+                this.errores.nom2 ="El nombre no cumple los requisitos";
+                this.confirmacion ++
+            }
+            if(!this.input.email){
+                this.errores.email1 = "El email es requerido";
+                this.confirmacion ++
+
+            }
+            else if (!this.validar_email(this.input.email)) {
+                this.errores.email2 = "El email no cumple los requisitos";
+                this.confirmacion ++
+
+            }
+            if(!this.input.password2){
+                this.errores.psw1 = "El password es requerido";
+                this.confirmacion ++
+                }
+            else if (this.validar_psw(this.password2 == false)){
+                this.errores.psw2 = "El password no cumple los requisitos"
+                this.confirmacion ++
+               
+                }
+            if(this.input.password3 != this.input.password2) {
+                this.errores.psw3 = "El password no coincide";
+                this.confirmacion ++
+
+            }
+            if(this.confirmacion == 1){
+                  this.agregarRegistro(this.input)
+                  //console.log(this.confirmacion)
+                  //console.log(this.errores.length)
+                  //console.log(this.errores)
+            }
+            this.onReset()
+
+        } ,
+
        
 
+        validar_email(email){
+
+           var regex = /(.+)@(.+){2,}\.(.+){2,}/;
+           return regex.test(email) ? true : false;
+
+        },
+         validar_psw(psw) {
+                var regex = /(?=^.{5,10}$)((?=.*\w)(?=.*[A-Z])(?=.*[0-9]))^./;
+                    
+                return regex.test(psw) ? true : false;
+        },
+          onReset() {
+        // Reset our form values
+        this.input.username = ''
+        this.input.email = ''
+        this.input.password2= ''
+        this.input.password3=''
+        this.input.checked = ''
         
-      
-        
+      },
+      ValidarLogin(){
+            this.erroreslogin = [];
+            if(!this.login.username)this.erroreslogin.username = "El nombre es requerido";
+            if(!this.login.password)this.erroreslogin.password = 'El password es requerido'
+            if(this.erroreslogin.length === 0){
+                this.agregarLogin(this.login)
+            }this.onReset2()
+      },
+      onReset2(){
+          this.login.username= '',
+          this.login.password= ''
+      }
+   
     },
     mounted(){
         
-        //this.$store.dispatch("agregarusers")
     }
 }
 </script>
+<style>
+
+
+
+</style>

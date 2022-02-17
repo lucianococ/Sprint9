@@ -30,13 +30,15 @@ const routes = [
     path: '/artist/:name',
     name: 'Artistitem',
     component: () => import(/* webpackChunkName: "name" */ '../views/ArtistItem.vue'),
-    meta: { requiresAuth2: true }
+    meta: { requiresAuth2: true },
+    
 },
 {
   path: '/album/:name',
   name: 'Albumitem',
   component: () => import(/* webpackChunkName: "name" */ '../views/AlbumItem.vue'),
-  meta: { requiresAuth2: true }
+  meta: { requiresAuth2: true}
+  
 },
 {
   path:'/buscador',
@@ -54,7 +56,7 @@ const routes = [
   path:'/comparador',
   name:'Comparador',
   component: ()=> import(/* webpackChunkName: "name" */ '../views/Comparador.vue'),
-  meta: { requiresAuth1: true }
+  //meta: { requiresAuth1: true }
 },
   {
     path: '/login',
@@ -86,7 +88,8 @@ router.beforeEach((to, from, next) => {
     if (!store.state.autentificacion){
       next({
         name:'Signup'
-      });
+      }
+      );
     } else{
       next();
     }
@@ -96,12 +99,13 @@ router.beforeEach((to, from, next) => {
 })
 router.beforeEach((to, from, next) => {
   if(to.matched.some(route => route.meta.requiresAuth2)){
-    if (!store.state.autentificacion2){
+    if (!store.state.autentificacion2 && !store.state.autentificacion){
       next({
         name:'Signup'
       });
-    } else{
-      next();
+    } else {
+      next(
+      );
     }
   }else {
     next();

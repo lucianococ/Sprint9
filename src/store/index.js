@@ -16,7 +16,20 @@ export default new Vuex.Store({
     simils: [],
     // Registro y Login
     Login: [],
-    registrados: [],
+    registrados: [
+      {
+        username: 'Luchismo',
+        email: 'luchismo@gmail.com',
+        password: 'Lucho000',
+        premium: true
+      },
+      {
+        username:'Luciano',
+        email:'luciano@gmail.com',
+        password:'Lucho111',
+        premium: false
+      }
+    ],
     autentificacion: false,
     autentificacion2: false,
 
@@ -75,8 +88,16 @@ export default new Vuex.Store({
       })
      
     },
-    SET_LOGIN(state, Login){
-      state.Login = Login
+    SET_LOGIN(state, val){
+      state.Login = {username : val.username,
+      password: val.password}
+      console.log(state.Login)
+    },
+    SET_BORRAR_LOGIN(state){
+      state.Login ={
+        username: '',
+        password: ''}
+        console.log(state.Login)
     },
     SET_AUTENTIFICACION(state, status){
       state.autentificacion = status
@@ -165,25 +186,27 @@ export default new Vuex.Store({
       const registrado = state.registrados.find(item => item.username === val.username)
       if (!registrado){
         commit('SET_REGISTRADOS', val)
-        
+        console.log(state.registrados)
       } 
 
     },
     agregarLogin({commit, state}, val) {
-      state.login
-        commit('SET_LOGIN', val)   
+        commit('SET_LOGIN', val)  
+        //console.log('1' + state.Login) 
         let usuarios = state.registrados;
         const autentificacion = usuarios.some(usuario => usuario.username == state.Login.username &&  usuario.password == state.Login.password && usuario.premium == true)
         if (autentificacion == true){
           commit('SET_AUTENTIFICACION', true)
-        }
+        }console.log('2' + state.Login)
         const autentificacion2 = usuarios.some(usuario => usuario.username == state.Login.username &&  usuario.password == state.Login.password && usuario.premium == false)
         if (autentificacion2 == true){
           commit('SET_AUTENTIFICACION2', true)
-        }console.log('aut1'+state.autentificacion)
+        }//console.log(state.Login)
         console.log('aut2'+state.autentificacion2)
-        
-        
+    },
+    borrarlogin({commit}){
+      commit('SET_BORRAR_LOGIN')
+      this.filtrarUser()
 
 
     },
@@ -192,14 +215,14 @@ export default new Vuex.Store({
   comparar1({commit, state}){
     axios.get(state.api1)
     .then(response => {
-      commit('SET_ART1', response.data.artist)
+      commit('SET_ART1', response.data)
       console.log(response.data)
     }) 
   },
   comparar2({commit, state}){
   axios.get(state.api2)
     .then(response => {
-      commit('SET_ART2', response.data.artist)
+      commit('SET_ART2', response.data)
     })
   },
   //Buscador
@@ -230,7 +253,17 @@ export default new Vuex.Store({
   },
 
 },
-  modules: {
+  getters: {
+   filtrarUser(state){
+     let user = state.Login.username
+     let users = state.registrados
+     let recuperado = users.filter(element => element.username == user)
+     console.log(recuperado)
+
+     return recuperado
+
+    }
+    
     
   },
   

@@ -77,44 +77,16 @@ footer{
       text-decoration: none;
     }
 }
-.title{
-  font-family: Star Jedi Hollow ;
-  font-size: 60px;
-  color: rgb(255, 238, 88) ;
-  box-sizing: border-box;
-  text-align: center;
-  line-height: 96px; 
-}
-#arriba{
-  margin-bottom: -15px;
-}
-#abajo{
-  margin-top: -39px;
-}
-.subtitle{
-  font-family: Biko;
-  box-sizing: border-box;
-  text-align: center;
-  font-size: 15px;
-  letter-spacing: 9.6px;
-  margin-bottom: 20px;
-  margin-top: 10px;
-  line-height: 15px;
-  color: #fff ;
-}
-
 
 .card-title{
   font-family: Arial, Helvetica, sans-serif ;
   color: rgb(196, 38, 41)
 }
-.imgcard {
-  height: 70px;
-  width: 70px;
-}
+
 .logo {
-  width: 20%;
+  width: 30%;
 }
+
 
 
  

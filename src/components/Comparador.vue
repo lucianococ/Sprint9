@@ -17,15 +17,13 @@
             <button type="submit"  class="btn btn-danger" @click="comparar1(artista1), comparar2(artista2)">Comparar</button><br>
             <div class="row">
                 <div class="col-6">
-                        <h2>{{art1.name}}</h2>  
-                        <h3>Escuchas: {{art1.stats.playcount}}</h3>
-                        <p>{{art1.bio.summary}}</p>  
+
 
                 </div>
                 <div class="col-6">
-                  <h2>{{art2.name}}</h2>  
-                  <h3>Escuchas: {{art2.stats.playcount}}</h3> 
-                <p>{{art2.bio.summary}}</p>  
+
+                 
+                 
 
 
                 </div>
@@ -45,7 +43,7 @@ import { mapActions, mapState } from 'vuex';
 
 export default {
     name: 'Comparador',
-    
+
     
     computed:{
             artista1:{
@@ -67,14 +65,14 @@ export default {
                 }
             },
             ...mapState(['art1','art2']),
-            
 
         
 
         },
     methods:{
-        ...mapActions(['comparar1', 'comparar2']),
-       
+        
+            ...mapActions(['comparar1', 'comparar2']),
+
        
         
 
