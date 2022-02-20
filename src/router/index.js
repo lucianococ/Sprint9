@@ -56,7 +56,7 @@ const routes = [
   path:'/comparador',
   name:'Comparador',
   component: ()=> import(/* webpackChunkName: "name" */ '../views/Comparador.vue'),
-  //meta: { requiresAuth1: true }
+  meta: { requiresAuth1: true }
 },
   {
     path: '/login',

@@ -17,6 +17,14 @@
                 <span class="text-danger">{{erroreslogin.password}}</span>
             </div>
             <button type="submit" @click="ValidarLogin()" class="btn btn-danger">Enter</button>
+                      <hr>
+
+             <div  v-if="confirmacionLog === 2">
+                    <div id="alert" class="alert alert-success animate__animated animate__fadeIn"> Bienvenido</div>         
+            </div>
+            <div  v-else-if="confirmacionLog === 3">
+                    <div id="alert" class="alert alert-danger animate__animated animate__fadeIn"> El usuario no existe</div>         
+            </div>
         </form>
         
         
@@ -25,6 +33,7 @@
             <div class="form-group ">
                 <label for="Username2">Username</label>
                 <input type="text" class="form-control" id="username2" v-model="input.username" placeholder="Enter usuario">
+                <label class="psw">Entre 6 y 13 caracteres.</label><br>
                 <span class="text-danger" >{{errores.nom1}}</span>
                 <span class="text-danger">{{errores.nom2}}</span>
             </div>  
@@ -38,6 +47,7 @@
             <div class="form-group" >
                 <label for="Password3">Password</label>
                 <input type="password" class="form-control" id="Password3" v-model="input.password2" placeholder="Password">
+                <label class="psw">Entre 5 y 10 caracteres. Mínimo un número y una mayúscula.</label><br>
                 <span class="text-danger">{{errores.psw1}}</span>
                 <span class="text-danger">{{errores.psw2}}</span>
 
@@ -57,10 +67,11 @@
             
           <hr>
             
-            <div  v-if="confirmacion ==1">
-                    <div id="alert" class="alert alert-success animate__animated animate__fadeIn"> Registro completo</div>      
-
-                
+            <div  v-if="confirmacion === 2">
+                    <div id="alert" class="alert alert-success animate__animated animate__fadeIn"> Registro completo</div>         
+            </div>
+            <div  v-else-if="confirmacion === 3">
+                    <div id="alert" class="alert alert-danger animate__animated animate__fadeIn"> El usuario ya existe</div>         
             </div>
            
        
@@ -73,7 +84,7 @@
 </template>
 <script>
 
-import { mapActions} from 'vuex';
+import { mapActions, mapState} from 'vuex';
 export default {
     name: 'Signup',
     
@@ -104,35 +115,23 @@ export default {
                 password:''
 
             },
-            confirmacion: 0
+            confirmacion: 0,
+            confirmacionLog: 0,
+        
            
         }
     },
     computed:{
-       /*
-            registro: {
-                get(){
-                    return this.$store.state.registros
-                },
-                 set(val){
-                    this.$store.commit('SET_REGISTROS', val);
-                 }
-            },
-            log: {
-                get(){
-                    return this.$store.state.Login
-                },
-                set(val){
-                    this.$store.commit('SET_LOGIN', val);
-                 }
-              
-        },*/
+        ...mapState(['registro', 'loginOk']),
+       
     },
     methods:{
         ...mapActions(['agregarRegistro', 'agregarLogin']),
+
         Validar(){
             this.errores = [];
             this.confirmacion = 1;
+
             if(!this.input.username){
                 this.errores.nom1 = "Es nombre es requerido";
                 this.confirmacion ++
@@ -155,8 +154,8 @@ export default {
                 this.errores.psw1 = "El password es requerido";
                 this.confirmacion ++
                 }
-            else if (this.validar_psw(this.password2 == false)){
-                this.errores.psw2 = "El password no cumple los requisitos"
+            else if (!this.validar_psw(this.input.password2)){
+                this.errores.psw1 = "El password no cumple los requisitos"
                 this.confirmacion ++
                
                 }
@@ -167,16 +166,14 @@ export default {
             }
             if(this.confirmacion == 1){
                   this.agregarRegistro(this.input)
-                  //console.log(this.confirmacion)
-                  //console.log(this.errores.length)
-                  //console.log(this.errores)
-            }
+                if(this.registro == true){
+                this.confirmacion = 2;
+                
+            }else this.confirmacion = 3
             this.onReset()
-
-        } ,
-
-       
-
+            }
+        },
+        
         validar_email(email){
 
            var regex = /(.+)@(.+){2,}\.(.+){2,}/;
@@ -197,13 +194,22 @@ export default {
         this.input.checked = ''
         
       },
+
+
       ValidarLogin(){
             this.erroreslogin = [];
+            this.confirmacionLog = 1;
             if(!this.login.username)this.erroreslogin.username = "El nombre es requerido";
+            this.confirmacionLog ++;
             if(!this.login.password)this.erroreslogin.password = 'El password es requerido'
+            this.confirmacionLog ++;
             if(this.erroreslogin.length === 0){
                 this.agregarLogin(this.login)
-            }this.onReset2()
+                if(this.loginOk == true){
+                    this.confirmacionLog = 2
+                }
+            }else this.confirmacionLog = 3
+            this.onReset2()
       },
       onReset2(){
           this.login.username= '',
@@ -217,6 +223,9 @@ export default {
 }
 </script>
 <style>
+.psw{
+    font-size: 12px;
+}
 
 
 
