@@ -1,5 +1,10 @@
+
 <template>
+
   <div class="container ">
+    <h2 class="mt-3 text-danger">Last FM Dataset</h2>
+    <h4>Descubre las estadísticas y rankings de todos los artistas de LastFm
+    </h4>
    <div class="row pt-5">
                 <ul class="col-4 list-group">
                   <h3>Top 10 artistas</h3>
@@ -47,8 +52,11 @@ import { mapState } from 'vuex'
 
 export default {
   
+  
+ 
   computed:{
-    ...mapState(['topart', 'toptemas', 'topalbum'])
+    ...mapState(['topart', 'toptemas', 'topalbum']),
+   
   },
   mounted(){
     this.$store.dispatch("agregarTopArt")

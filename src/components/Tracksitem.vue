@@ -29,9 +29,7 @@
 </template>
 
 <script>
-//import {  mapState, mapGetters} from 'vuex'
-//import CardPeli from '../components/CardPeli.vue'
-//import CardPilotos from '../components/CardPilotos.vue'
+
 
 
 export default {
@@ -41,53 +39,18 @@ export default {
 
 data(){
     return{
-        //id: this.$route.params.starship.url.split("/starships/").pop().replace('/', ''),
         url: this.$route.params.tracks.image[3],
-        //piloto:  this.$route.params.starship.pilots,
-        //film: this.$route.params.starship.films,
         defaultImg: "https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png" 
-
-        
-
     }
 },
-computed:{
-   // ...mapState(['peliculas', 'pelisFiltradas', 'pelisAsignadas']),
-      
-    
-    /*films: {
-            get (){
-                return this.$store.state.pelisAsignadas        
-                },
-        
-            set(val){
-                this.$store.commit('SET_PELIS_ASIGNADAS', val);
-            }
-        },
-    pilotos: {
-            get (){
-                return this.$store.state.pilotosAsignados       
-                },
-        
-            set(val){
-                this.$store.commit('SET_PILOTO_ASIGNADO', val);
-            }
-        },
-       
-     ...mapGetters(['filteredPelis', 'filteredPeople']),     
-      
-},*/
+computed:{},
+  
 methods:{
 imgError(event){
          event.target.src = "https://starwars-visualguide.com/assets/img/placeholder.jpg"
 
      } 
-},/*
- mounted() {
-     this.$store.dispatch("getfilms"); 
-     this.$store.dispatch("getpeople"); 
-     this.$store.dispatch("agregarpeli", this.film);
-     this.$store.dispatch("agregarpiloto", this.piloto);  */ 
+
 },
 }
 </script>

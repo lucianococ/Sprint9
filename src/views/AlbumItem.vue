@@ -1,7 +1,7 @@
 <template>
-  <div class="starshipsitem">
+  <div class="albumitem">
     <AlbumItem/>
-   
+   <albumes :albumes="item"></albumes>
   </div>
 </template>
 

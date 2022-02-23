@@ -34,7 +34,6 @@ export default {
     name: 'Login',
     data(){
         return{
-           // user : this.$store.state.Login.username
         }
     },
     components:{

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <comparador/>
+        <Comparador/>
     </div>
 </template>
 <script>

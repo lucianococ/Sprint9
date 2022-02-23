@@ -78,7 +78,6 @@ export default {
 
     data(){
         return{
-            //bioArtista: artistas.bio
         }
     },
     computed:{
@@ -105,7 +104,5 @@ export default {
     methods:{    
             ...mapActions(['comparar1', 'comparar2']),    
     }
-        
-    
 }
 </script>

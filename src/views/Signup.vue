@@ -1,6 +1,7 @@
 <template>
     <div>
      <h2 class="mt-3">Registrate para ver todo el contenido</h2>
+     
 
         <div class="row justify-content-center pt-5">
         <form class="col-3" id="login" @submit.prevent="">
@@ -59,7 +60,7 @@
             </div>
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" v-model="input.premium" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">¿Quieres ser premium?</label>
+                <label class="form-check-label" for="exampleCheck1">¿Quieres ser premium?. Podras acceder a todo el contenido</label>
             </div>
                 
             
@@ -87,7 +88,7 @@
 import { mapActions, mapState} from 'vuex';
 export default {
     name: 'Signup',
-    
+
     data(){
         return{
             input:{
@@ -123,6 +124,7 @@ export default {
     },
     computed:{
         ...mapState(['registro', 'loginOk']),
+        
        
     },
     methods:{
